@@ -1,28 +1,33 @@
+// Modified version of https://github.com/pmndrs/react-three-next/blob/main/next.config.js
+
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
-})
+});
 
-/**
- * A fork of 'next-pwa' that has app directory support
- * @see https://github.com/shadowwalker/next-pwa/issues/424#issuecomment-1332258575
- */
-const withPWA = require('@ducanh2912/next-pwa').default({
+const runtimeCaching = require('next-pwa/cache');
+
+const withPWA = require('next-pwa')({
   dest: 'public',
   disable: process.env.NODE_ENV === 'development',
-})
+  runtimeCaching,
+  // register: true,
+  // scope: '/app',
+  // sw: 'sw.js',
+  //...
+});
 
 const nextConfig = {
-  // uncomment the following snippet if using styled components
-  // compiler: {
-  //   styledComponents: true,
-  // },
-  reactStrictMode: true, // Recommended for the `pages` directory, default in `app`.
-  images: {},
+  compiler: {
+    styledComponents: true,
+  },
+  pageExtensions: ['page.tsx', 'api.ts', 'index.tsx'],
+  experimental: {},
+  images: {
+    domains: ['images.rawpixel.com', 'drive.google.com'],
+  },
+  reactStrictMode: true,
+  swcMinify: true,
   webpack(config, { isServer }) {
-    if (!isServer) {
-      // We're in the browser build, so we can safely exclude the sharp module
-      config.externals.push('sharp')
-    }
     // audio support
     config.module.rules.push({
       test: /\.(ogg|mp3|wav|mpe?g)$/i,
@@ -40,35 +45,61 @@ const nextConfig = {
           },
         },
       ],
-    })
-
+    });
     // shader support
     config.module.rules.push({
       test: /\.(glsl|vs|fs|vert|frag)$/,
       exclude: /node_modules/,
       use: ['raw-loader', 'glslify-loader'],
-    })
-
-    return config
+    });
+    // svg support
+    config.module.rules.push({
+      test: /\.svg$/i,
+      issuer: /\.[jt]sx?$/,
+      loader: '@svgr/webpack',
+      options: {
+        svgoConfig: {
+          plugins: [
+            {
+              name: 'preset-default',
+              params: {
+                overrides: { removeViewBox: false },
+              },
+            },
+          ],
+        },
+      },
+    });
+    return config;
   },
+};
+// manage i18n
+if (process.env.EXPORT !== 'true') {
+  nextConfig.i18n = {
+    locales: ['en', 'fr'],
+    defaultLocale: 'en',
+  };
 }
-
-const KEYS_TO_OMIT = ['webpackDevMiddleware', 'configOrigin', 'target', 'analyticsId', 'webpack5', 'amp', 'assetPrefix']
-
+const KEYS_TO_OMIT = [
+  'webpackDevMiddleware',
+  'configOrigin',
+  'target',
+  'analyticsId',
+  'webpack5',
+  'amp',
+  'assetPrefix',
+];
 module.exports = (_phase, { defaultConfig }) => {
-  const plugins = [[withPWA], [withBundleAnalyzer, {}]]
-
+  const plugins = [[withPWA], [withBundleAnalyzer, {}]];
   const wConfig = plugins.reduce((acc, [plugin, config]) => plugin({ ...acc, ...config }), {
     ...defaultConfig,
     ...nextConfig,
-  })
-
-  const finalConfig = {}
+  });
+  const finalConfig = {};
   Object.keys(wConfig).forEach((key) => {
     if (!KEYS_TO_OMIT.includes(key)) {
-      finalConfig[key] = wConfig[key]
+      finalConfig[key] = wConfig[key];
     }
-  })
-
-  return finalConfig
-}
+  });
+  return finalConfig;
+};
