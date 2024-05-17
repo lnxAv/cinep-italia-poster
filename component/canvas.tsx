@@ -1,5 +1,6 @@
 "use client"
 
+import CircleMaterial from "@/styles/shader/circleMaterial/component";
 import { CameraControls, Center, Text3D } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 
@@ -14,7 +15,7 @@ export default function Pisa() {
             <Center>
                 <Text3D {...textProps}>
                     hello
-                    <meshToonMaterial/>
+                    <CircleMaterial/>
                 </Text3D>
             </Center>
         </Canvas>
