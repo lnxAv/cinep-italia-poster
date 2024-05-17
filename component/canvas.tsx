@@ -1,18 +1,22 @@
 "use client"
 
-import { CameraControls, Text3D } from "@react-three/drei";
+import { CameraControls, Center, Text3D } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 
-const font = {
-
+const textProps = {
+    font: './Rubik Mono One_Regular.json',
 }
+
 export default function Pisa() {
     return (
         <Canvas>
             <CameraControls/>
-            <Text3D>
-                <meshToonMaterial/>
-            </Text3d>
+            <Center>
+                <Text3D {...textProps}>
+                    hello
+                    <meshToonMaterial/>
+                </Text3D>
+            </Center>
         </Canvas>
     )
 }
