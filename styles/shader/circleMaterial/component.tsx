@@ -39,6 +39,9 @@ const CircleMaterial = memo(
       <circleMaterial
         ref={meshRef}
         key={CircleShader.key}
+        uniforms={
+          u
+        }
       />
     )
   }
