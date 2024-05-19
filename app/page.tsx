@@ -6,7 +6,7 @@ import Image from "next/image";
 export default function Home() {
   return (
     <main className="flex flex-col relative min-h-screen min-w-screen">
-      <div id="tree-bg" className="absolute z-negative w-full h-full" >
+      <div id="tree-bg" className="absolute  w-full h-full" >
         <Pisa />
       </div>
       <section className="w-full">
