@@ -17,6 +17,7 @@ const textProps = {
     size: 0.8,
     depth: 0.01,
     curveSegments: 32,
+    amount: 0.11,
 }
 
 export default function Pisa() {

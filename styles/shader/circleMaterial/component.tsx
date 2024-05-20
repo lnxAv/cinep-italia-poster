@@ -14,8 +14,8 @@ const CircleShader = shaderMaterial(
     uTime: 0,
     uAspect: 0,
   },
+  circleVert,
   circleFrag,
-  circleVert
 );
 
 // Renew when file is edited
