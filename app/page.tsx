@@ -8,10 +8,10 @@ export default function Home() {
         <Pisa />
       </div>
       <section className="w-full">
-        <div className="w-1/3 max-w-60 p-4">
+        <div className="w-1/3 max-w-60 p-4 mix-blend-difference">
           <div className="flex justify-between items-center flex-no-wrap m-1 pb-1">
             <div>
-              <Image className="bg-accent" alt="cinema public" width={50} height={50} src="https://cinemapublic.ca/wp-content/uploads/2021/11/cinemapublic_official_logo_black.svg"/>
+              <Image className="p-1 bg-accent" alt="cinema public" width={50} height={50} src="https://cinemapublic.ca/wp-content/uploads/2021/11/cinemapublic_official_logo_black.svg"/>
             </div>
             <div>
               <p>x</p>
@@ -43,11 +43,12 @@ export default function Home() {
       </section>
       <footer className="flex w-full justify-between absolute bottom-0 p-4">
         <p>
-          (438) 771-7747,
+          (438) 771-7747,<br/>
           cinemapublic.ca
         </p>
         <div>
-          x
+          Montreal posters,<br/> 
+          case study. p.1
         </div>
       </footer>
     </main>
