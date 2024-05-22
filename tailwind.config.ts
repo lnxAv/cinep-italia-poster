@@ -9,16 +9,16 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-inter)'],
-        mono: ['var(--font-rubik)'],
+        sans: ["var(--font-inter)"],
+        mono: ["var(--font-rubik)"],
       },
-      colors : {
-        accent: '#FDF75E'
+      colors: {
+        accent: "#FDF75E",
       },
       zIndex: {
-        'auto': 'auto',
-        'negative': '-1',
-      }
+        auto: "auto",
+        negative: "-1",
+      },
     },
   },
   plugins: [],

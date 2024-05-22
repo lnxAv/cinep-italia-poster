@@ -1,10 +1,10 @@
-import { useFrame } from '@react-three/fiber'
-import { useEffect, useMemo, useRef } from 'react'
-import { Box3, MeshBasicMaterial, MeshDepthMaterial, MeshLambertMaterial, MeshStandardMaterial } from 'three'
-import CustomShaderMaterial from 'three-custom-shader-material'
+import { useFrame } from "@react-three/fiber";
+import { useEffect, useMemo, useRef } from "react";
+import { Box3, MeshStandardMaterial } from "three";
+import CustomShaderMaterial from "three-custom-shader-material";
 
-import circleFrag from './glsl/circle.frag'
-import circleVert from './glsl/circle.vert'
+import circleFrag from "./glsl/circle.frag";
+import circleVert from "./glsl/circle.vert";
 
 const shader = {
   vertex: `
@@ -47,81 +47,79 @@ const shader = {
         csm_FragColor = vec4(csm_FragColor.xyz, csm_vVisibility);
       }
     `,
-}
+};
 
 type Props = {
-  rad: number
-}
+  rad: number;
+};
 
-function CircleMaterial({...props}: Props) {
-  const materialRef = useRef<any | null>(null)
-  const boundingBoxRef = useRef<Box3>(new Box3)   
+function CircleMaterial({ ...props }: Props) {
+  const materialRef = useRef<any | null>(null);
+  const boundingBoxRef = useRef<Box3>(new Box3());
 
   const firstUpdate = () => {
-    const self = materialRef.current
+    const self = materialRef.current;
     try {
       self.__r3f.parent.geometry.computeBoundingBox();
       self.__r3f.parent.geometry.center();
-
     } catch (error) {
-      console.warn('A Circle material failed to compute bounding box.')
-    }finally {
+      console.warn("A Circle material failed to compute bounding box.");
+    } finally {
       const newBox = self?.__r3f.parent.geometry.boundingBox || null;
-      self.__r3f.parent.geometry.rotateX(-1 * Math.PI/2)
+      self.__r3f.parent.geometry.rotateX((-1 * Math.PI) / 2);
       boundingBoxRef.current = newBox;
-      if(materialRef.current){
-        console.log('updated')
+      if (materialRef.current) {
+        console.log("updated");
         materialRef.current.uniforms.uMin.value = boundingBoxRef.current.min;
         materialRef.current.uniforms.uMax.value = boundingBoxRef.current.max;
       }
     }
   };
 
-  useEffect(()=>{
-    firstUpdate()
-  },[])
+  useEffect(() => {
+    firstUpdate();
+  }, []);
 
-  useFrame((state, d)=>{
-    if(materialRef?.current){
-      materialRef.current.uniforms.uAspect.value = state.viewport.aspect
-      materialRef.current.uniforms.uTime.value = state.clock.elapsedTime
+  useFrame((state, d) => {
+    if (materialRef?.current) {
+      materialRef.current.uniforms.uAspect.value = state.viewport.aspect;
+      materialRef.current.uniforms.uTime.value = state.clock.elapsedTime;
     }
-  })
-
-
+  });
 
   const uniforms = useMemo(
     () => ({
       uMin: {
-        value: [0,0,0]
+        value: [0, 0, 0],
       },
       uMax: {
-        value: [0,0,0]
+        value: [0, 0, 0],
       },
       uRad: {
-        value: props.rad
+        value: props.rad,
       },
       uTime: {
-        value: 0
+        value: 0,
       },
       uAspect: {
-        value: 0
-      }
-    })
-  ,[props.rad])
+        value: 0,
+      },
+    }),
+    [props.rad],
+  );
 
   return (
-      <CustomShaderMaterial
-        ref={materialRef}
-        baseMaterial={MeshStandardMaterial}
-        silent
-        vertexShader={shader.vertex}
-        fragmentShader={shader.fragment}
-        uniforms={uniforms}
-        transparent
-        color={'#f5f178'}
-      />
-  )
+    <CustomShaderMaterial
+      ref={materialRef}
+      baseMaterial={MeshStandardMaterial}
+      silent
+      vertexShader={shader.vertex}
+      fragmentShader={shader.fragment}
+      uniforms={uniforms}
+      transparent
+      color={"#f5f178"}
+    />
+  );
 }
 
-export default CircleMaterial
+export default CircleMaterial;

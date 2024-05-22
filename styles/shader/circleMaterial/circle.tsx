@@ -1,11 +1,10 @@
-import { shaderMaterial, useHelper } from '@react-three/drei';
-import { extend, ReactThreeFiber, ThreeElements, useFrame } from '@react-three/fiber';
-import React, { memo, useEffect, useRef, useState } from 'react';
-import { AxesHelper, Box3, DoubleSide, MathUtils, NormalBlending, ShaderMaterial } from 'three';
+import { shaderMaterial } from "@react-three/drei";
+import { extend, ReactThreeFiber, useFrame } from "@react-three/fiber";
+import React, { memo, useEffect, useRef } from "react";
+import { Box3, MathUtils, ShaderMaterial } from "three";
 
-import circleFrag from './glsl/circle.frag'
-import circleVert from './glsl/circle.vert'
-
+import circleFrag from "./glsl/circle.frag";
+import circleVert from "./glsl/circle.vert";
 
 const CircleShader = shaderMaterial(
   {
@@ -21,54 +20,56 @@ const CircleShader = shaderMaterial(
 // Renew when file is edited
 CircleShader.key = MathUtils.generateUUID();
 //@ Declare shader to typescript
-extend({CircleMaterial: CircleShader})
+extend({ CircleMaterial: CircleShader });
 declare global {
   namespace JSX {
-    interface IntrinsicElements{
-      circleMaterial: ReactThreeFiber.Object3DNode<ShaderMaterial, typeof ShaderMaterial>;
+    interface IntrinsicElements {
+      circleMaterial: ReactThreeFiber.Object3DNode<
+        ShaderMaterial,
+        typeof ShaderMaterial
+      >;
     }
   }
 }
 
 type Props = {
-  rad: number
-}
- 
-const CircleMaterial = memo(
-   function CircleMaterial ({...props}: Partial<ShaderMaterial> & Props) {
-    const materialRef = useRef<ShaderMaterial | null>(null)
-    const boundingBoxRef = useRef<Box3>(new Box3)   
+  rad: number;
+};
 
-    useFrame((state, d)=>{
-      if(materialRef?.current){
-        materialRef.current.uniforms.uAspect.value = state.viewport.aspect
-        materialRef.current.uniforms.uTime.value = state.clock.elapsedTime
+const CircleMaterial = memo(
+  function CircleMaterial({ ...props }: Partial<ShaderMaterial> & Props) {
+    const materialRef = useRef<ShaderMaterial | null>(null);
+    const boundingBoxRef = useRef<Box3>(new Box3());
+
+    useFrame((state, d) => {
+      if (materialRef?.current) {
+        materialRef.current.uniforms.uAspect.value = state.viewport.aspect;
+        materialRef.current.uniforms.uTime.value = state.clock.elapsedTime;
       }
-    })
+    });
 
     const firstUpdate = (self: any) => {
       try {
         self.__r3f.parent.geometry.computeBoundingBox();
         self.__r3f.parent.geometry.center();
-
       } catch (error) {
-        console.warn('A Circle material failed to compute bounding box.')
-      }finally {
+        console.warn("A Circle material failed to compute bounding box.");
+      } finally {
         const newBox = self?.__r3f.parent.geometry.boundingBox || null;
-        self.__r3f.parent.geometry.rotateX(-1 * Math.PI/2)
+        self.__r3f.parent.geometry.rotateX((-1 * Math.PI) / 2);
         boundingBoxRef.current = newBox;
       }
     };
 
-    useEffect(()=>{
-      if(materialRef.current){
-        console.log('updated')
+    useEffect(() => {
+      if (materialRef.current) {
+        console.log("updated");
         materialRef.current.uniforms.uMin.value = boundingBoxRef.current.min;
         materialRef.current.uniforms.uMax.value = boundingBoxRef.current.max;
       }
-    },[])
+    }, []);
 
-    return(
+    return (
       <circleMaterial
         ref={materialRef}
         transparent
@@ -76,25 +77,25 @@ const CircleMaterial = memo(
         key={CircleShader.key}
         uniforms={{
           uMin: {
-            value: boundingBoxRef.current?.min
+            value: boundingBoxRef.current?.min,
           },
           uMax: {
-            value: boundingBoxRef.current?.max
+            value: boundingBoxRef.current?.max,
           },
           uRad: {
-            value: props.rad
+            value: props.rad,
           },
           uTime: {
-            value: 0
+            value: 0,
           },
           uAspect: {
-            value: 0
-          }
+            value: 0,
+          },
         }}
       />
-    )
+    );
   },
-  (prev, next) => prev != next
+  (prev, next) => prev != next,
 );
 
-export default CircleMaterial
+export default CircleMaterial;

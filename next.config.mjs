@@ -1,14 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  webpack: (config, {isServer}) => {
+  webpack: (config, { isServer }) => {
     // Shader support
     config.module.rules.push({
       test: /\.(glsl|vs|fs|vert|frag)$/,
       exclude: /node_modules/,
-      use: ['raw-loader', 'glslify-loader'],
-    })
-    return config
-  }
+      use: ["raw-loader", "glslify-loader"],
+    });
+    return config;
+  },
 };
 
 export default nextConfig;
