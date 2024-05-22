@@ -1,21 +1,18 @@
 
-import CircleMaterial from "@/styles/shader/circleMaterial/component";
-import {  Center, Text, Text3D } from "@react-three/drei";
-import { Canvas, Object3DNode, useFrame } from "@react-three/fiber";
-import { useRef } from "react";
+import { useFrame } from "@react-three/fiber";
+import { ReactNode, useRef } from "react";
 import { Group } from "three";
-import  { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js'
-import { degToRad } from "three/src/math/MathUtils.js";
 
-export default function Spin({children}: any) {
+export default function Spin({children, rotate = false, position = [0,0,0]}: {children: ReactNode ,position?: [number,number,number] ,rotate?: boolean}) {
+    const rotateRef = useRef<boolean>(rotate)
     const groupRef = useRef<Group | null>(null)
     useFrame((state, d)=>{
-        if(groupRef.current){
+        if(groupRef.current && rotate){
             groupRef.current.rotation.y += -d / 2
         }
     })
     return (
-        <group ref={groupRef}>
+        <group ref={groupRef} position={position} onPointerEnter={()=>{rotateRef.current = true}}>
             {children}
         </group>
     )
