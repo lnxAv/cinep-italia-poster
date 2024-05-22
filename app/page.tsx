@@ -47,8 +47,8 @@ export default function Home() {
           cinemapublic.ca
         </p>
         <div>
-          Montreal posters,<br/> 
-          case study. p.1
+          Mtl designs,<br/> 
+          study. p.1
         </div>
       </footer>
     </main>

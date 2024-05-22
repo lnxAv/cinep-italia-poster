@@ -61,10 +61,10 @@ export default function Pisa() {
                                         </div>
                                         <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
                                             <a href="https://github.com/lnxAv" target="_blank" rel="noopener noreferrer">
-                                                <img width={50} height={50} src={'/github-mark-white.png'}/>
+                                                <Image width={50} height={50} src={'/github-mark-white.png'} alt='GitHub'/>
                                             </a>
                                             <a href="https://ca.linkedin.com/in/pierrewrabel/en" target="_blank" rel="noopener noreferrer">
-                                                <img width={50} height={50} src={'/in-mark.png'}/>
+                                                <Image width={50} height={50} src={'/in-mark.png'} alt="LinkedIn"/>
                                             </a>
                                         </div>
                                     </div>
