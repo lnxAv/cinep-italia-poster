@@ -8,7 +8,7 @@ export default function Home() {
         <Pisa />
       </div>
       <section className="w-full">
-        <div className="w-1/3 p-4">
+        <div className="w-1/3 max-w-60 p-4">
           <div className="flex justify-between items-center flex-no-wrap m-1 pb-1">
             <div>
               <Image className="bg-accent" alt="cinema public" width={50} height={50} src="https://cinemapublic.ca/wp-content/uploads/2021/11/cinemapublic_official_logo_black.svg"/>
@@ -23,20 +23,20 @@ export default function Home() {
           <hr/>
           <div className="m-1">
             Des projections de films
-            par le Cinema Public,
+            par le Cinema Public, <br/>
             chaque semaine
             a la casa d&#39;Italia.
           </div>
           <hr/>
           <div className="m-1">
             Film screenings
-            from Cinema Public,
+            from Cinema Public, <br/>
             every week
             at Casa d&#39;Italia
           </div>
           <hr/>
           <div className="m-1">
-            505 Jean-Talon E,
+            505 Jean-Talon E,<br/>
             Via Berri
           </div>
         </div>

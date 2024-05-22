@@ -24,6 +24,10 @@ hr {
   border-top: 2px solid #FDF75E;
 }
 
+a {
+  text-decoration: underline;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

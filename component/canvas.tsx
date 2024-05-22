@@ -1,12 +1,13 @@
 "use client"
 
 import CircleMaterial from "@/styles/shader/circleMaterial/circleV2";
-import {  Center, Scroll, ScrollControls, Text3D } from "@react-three/drei";
+import {  Center, Html, Scroll, ScrollControls, Text3D } from "@react-three/drei";
 import { Canvas, Object3DNode } from "@react-three/fiber";
 import  { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js'
 import { degToRad } from "three/src/math/MathUtils.js";
 import Spin from "./spin";
 import { Flag } from "./flag";
+import Image from "next/image";
 
 declare module "@react-three/fiber" {
     interface ThreeElements {
@@ -50,6 +51,25 @@ export default function Pisa() {
                             <TextRow radius={2} offset={[0,-4.9,0]}/>
                             <TextRow radius={2} offset={[0,-7.4,0]}/>
                             <TextRow radius={2} offset={[0,-9.9,0]}/>
+                        </Scroll>
+                        <Scroll html>
+                            <div style={{position: 'relative', top:'170vh', width: '100vw'}}>
+                                <div style={{display: 'flex', flexDirection:'column', justifyContent:'center', alignItems: 'center'}}>
+                                    <div>
+                                        <div>
+                                            coded by <a href="https://ca.linkedin.com/in/pierrewrabel/en" target="_blank" rel="noopener noreferrer">Pierre-wesner Rabel</a> .
+                                        </div>
+                                        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
+                                            <a href="https://github.com/lnxAv" target="_blank" rel="noopener noreferrer">
+                                                <img width={50} height={50} src={'/github-mark-white.png'}/>
+                                            </a>
+                                            <a href="https://ca.linkedin.com/in/pierrewrabel/en" target="_blank" rel="noopener noreferrer">
+                                                <img width={50} height={50} src={'/in-mark.png'}/>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </Scroll>
                     </ScrollControls>
                 </group>
