@@ -6,6 +6,7 @@ import { Canvas, Object3DNode } from "@react-three/fiber";
 import  { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js'
 import { degToRad } from "three/src/math/MathUtils.js";
 import Spin from "./spin";
+import { Flag } from "./flag";
 
 declare module "@react-three/fiber" {
     interface ThreeElements {
@@ -43,6 +44,7 @@ export default function Pisa() {
                 <group position={[0,2,-4]} rotation={[0, 0, -degToRad(3.9)]}>
                     <ScrollControls pages={2} damping={0.1} >
                         <Scroll>
+                            <Flag />
                             <TextRow radius={1.5} rotate/>
                             <TextRow radius={2} offset={[0,-2.4,0]}/>
                             <TextRow radius={2} offset={[0,-4.9,0]}/>
