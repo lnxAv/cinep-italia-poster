@@ -10,7 +10,7 @@ import {
 } from "@react-three/drei";
 import { Canvas, Object3DNode } from "@react-three/fiber";
 import { degToRad } from "three/src/math/MathUtils.js";
-import Spin from "./spin";
+import Spin, { SPIN_STATE } from "./spin";
 import { Flag } from "./flag";
 import Image from "next/image";
 import { TextGeometry } from "three/examples/jsm/Addons.js";
@@ -35,21 +35,22 @@ const textProps = {
 const TextRow = ({
   ...props
 }: {
-  rotate?: boolean;
+  rotate?: SPIN_STATE;
   offset?: [number, number, number];
+  scrollOffset?: number,
   radius?: number;
 }) => {
 
   return (
-    <Spin rotate={props.rotate} position={props.offset}>
-      <Text3D {...textProps} rotation={[degToRad(90), 0, degToRad(70)]}>
+    <Spin rotate={props.rotate} position={props.offset} scrollOffset={props.scrollOffset}>
+      <Text3D {...textProps} rotation={[degToRad(90), 0, degToRad(30)]}>
         CinemaCinema
         <CircleMaterial rad={props.radius || 1} />
       </Text3D>
       <Text3D
         {...textProps}
         position={[0, -1.2, 0]}
-        rotation={[degToRad(90), 0, degToRad(70)]}
+        rotation={[degToRad(90), 0, degToRad(30)]}
       >
         PublicPublic
         <CircleMaterial rad={props.radius || 1} />
@@ -68,11 +69,11 @@ export default function Pisa() {
             <ScrollControls pages={2} damping={0.1}>
               <Scroll>
                 <Flag />
-                <TextRow radius={1.5} rotate />
-                <TextRow radius={2} offset={[0, -2.4, 0]} />
-                <TextRow radius={2} offset={[0, -4.9, 0]} />
-                <TextRow radius={2} offset={[0, -7.4, 0]} />
-                <TextRow radius={2} offset={[0, -9.9, 0]} />
+                <TextRow radius={1.5} rotate={SPIN_STATE.infinite} />
+                <TextRow radius={2} rotate={SPIN_STATE.scroll} offset={[0, -2.4, 0]} scrollOffset={1/6}/>
+                <TextRow radius={2} rotate={SPIN_STATE.scroll} offset={[0, -4.9, 0]} scrollOffset={2/6}/>
+                <TextRow radius={2} rotate={SPIN_STATE.scroll} offset={[0, -7.4, 0]} scrollOffset={3/6}/>
+                <TextRow radius={2} rotate={SPIN_STATE.scroll} offset={[0, -9.9, 0]} scrollOffset={4/6}/>
               </Scroll>
               <Scroll html>
                 <div
