@@ -35,8 +35,8 @@ const shader = {
         vec3 pos = uRad*dir + vec3(0., 0., position.z) + dir * position.y;
         vFrag =   modelViewMatrix * vec4( pos, 1.0 );
         vec3 detection = vec3((-((-vFrag.x - 0.85)) * (vFrag.x - 0.85 )) , 0. , (vFrag.z + 11.2));
-        csm_vVisibility = detection.z ;
-        pos = edges(pos, detection, 0.05);
+        csm_vVisibility = detection.z;
+        pos = edges(pos, detection, 0.04);
         csm_Position = vec3(1.5 * pos);
       } 
     `,

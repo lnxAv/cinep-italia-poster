@@ -43,14 +43,14 @@ const TextRow = ({
 
   return (
     <Spin rotate={props.rotate} position={props.offset} scrollOffset={props.scrollOffset}>
-      <Text3D {...textProps} rotation={[degToRad(90), 0, degToRad(30)]}>
+      <Text3D {...textProps} rotation={[degToRad(90), 0, degToRad(70)]}>
         CinemaCinema
         <CircleMaterial rad={props.radius || 1} />
       </Text3D>
       <Text3D
         {...textProps}
         position={[0, -1.2, 0]}
-        rotation={[degToRad(90), 0, degToRad(30)]}
+        rotation={[degToRad(90), 0, degToRad(70)]}
       >
         PublicPublic
         <CircleMaterial rad={props.radius || 1} />
