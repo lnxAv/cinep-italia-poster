@@ -9,7 +9,7 @@ export default function Home() {
         <Pisa />
       </div>
       <section className="w-full">
-        <div className="w-1/3 max-w-60 p-4 mix-blend-difference">
+        <div className="w-1/2 max-w-60 p-4 mix-blend-difference">
           <div className="flex justify-between items-center flex-no-wrap m-1 pb-1">
             <div>
               <Image
