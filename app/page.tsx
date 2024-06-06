@@ -34,11 +34,6 @@ export default function Home() {
           </div>
           <hr />
           <div className="m-1">
-            Film screenings from Cinema Public, <br />
-            every week at Casa d&#39;Italia
-          </div>
-          <hr />
-          <div className="m-1">
             505 Jean-Talon E,
             <br />
             Via Berri
