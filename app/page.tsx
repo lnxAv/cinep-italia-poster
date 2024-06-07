@@ -1,12 +1,12 @@
 import React from "react";
 import Image from "next/image";
-import Pisa from "@/component/canvas";
+import PisaCanvas from "@/component/canvas";
 
 export default function Home() {
   return (
     <main className="flex flex-col relative min-h-screen min-w-screen">
       <div id="tree-bg" className="absolute  w-full h-full">
-        <Pisa />
+        <PisaCanvas />
       </div>
       <section className="w-full">
         <div className="w-1/2 max-w-60 p-4 mix-blend-difference">
@@ -47,7 +47,7 @@ export default function Home() {
           cinemapublic.ca
         </p>
         <div>
-          Mtl designs,
+          Mtl posters,
           <br />
           study. p.1
         </div>

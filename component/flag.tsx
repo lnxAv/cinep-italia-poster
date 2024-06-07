@@ -1,18 +1,18 @@
+import React, { useMemo } from "react";
 import { useLoader } from "@react-three/fiber";
-import { useMemo } from "react";
 import { Shape as ShapeType } from "three";
 import { SVGLoader } from "three/examples/jsm/Addons.js";
 
-const Shape = ({ shape }: { shape: ShapeType }) => {
+function Shape({ shape }: { shape: ShapeType; }) {
   return (
     <mesh>
       <shapeGeometry args={[shape]} />
-      <meshBasicMaterial color={"#f5f178"} />
+      <meshBasicMaterial color="#f5f178" />
     </mesh>
   );
-};
+}
 
-export const Flag = () => {
+  export default function Flag(){
   const data = useLoader(SVGLoader, "flag.svg");
   const svg = useMemo(
     () =>

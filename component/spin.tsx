@@ -1,51 +1,53 @@
 import { useScroll } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { ReactNode, useEffect, useRef } from "react";
+import React, { ReactNode, useCallback, useEffect, useRef } from "react";
 import { Group, MathUtils } from "three";
 
-export enum SPIN_STATE {
-  stop = 'stop',
-  scroll = 'scroll',
-  infinite = 'infinite',
+export enum SpinState {
+  STOP = 'stop',
+  SCROLL = 'scroll',
+  INFINITE = 'infinite',
 }
 
 export default function Spin({
   children,
-  rotate = SPIN_STATE.stop,
+  rotate = SpinState.STOP,
   scrollOffset = 0,
   position = [0, 0, 0],
 }: {
   children: ReactNode;
   position?: [number, number, number];
   scrollOffset?: number;
-  rotate?: SPIN_STATE;
+  rotate?: SpinState;
 }) {
-  const rotateRef = useRef<SPIN_STATE>(rotate);
+  const rotateRef = useRef<SpinState>(rotate);
   const groupRef = useRef<Group | null>(null);
   const scroll = useScroll();
-  const doRotate = (delta: number) => {
+  const doRotate = useCallback((delta: number) => {
+    
     if (groupRef.current && rotateRef.current) {
+      const value = MathUtils.clamp(scroll.offset, scrollOffset, 1)
       switch (rotateRef.current) {
-        case SPIN_STATE.infinite:
+        case SpinState.INFINITE:
           groupRef.current.rotation.y += -delta / 2;
           break;
-        case SPIN_STATE.scroll:
-          let value = MathUtils.clamp(scroll.offset, scrollOffset, 1)
+        case SpinState.SCROLL:
           if(scrollOffset <= scroll.offset) {
             groupRef.current.rotation.y = -MathUtils.degToRad( value * 180);
           }
           else {
             groupRef.current.rotation.y = -MathUtils.degToRad(scrollOffset * 180)
           }
+          break;
         default:
           break;
       }
     }
-  }
+  }, [scroll.offset, scrollOffset])
 
   useEffect(()=>{
     doRotate(0)
-  },[])
+  },[doRotate])
 
   useFrame((state, delta) => {
     doRotate(delta)
